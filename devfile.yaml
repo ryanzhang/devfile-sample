@@ -6,19 +6,11 @@ metadata:
     alpha.build-context: src
     alpha.build-dockerfile: Dockerfile
 components:
-  - name: buildguidance
-    attributes:
-      tool: console-import
-    container:
-      image: buildguidanceimage-placeholder
-      memoryLimit: 1024Mi
-      endpoints:
-        - name: http-3001
-          targetPort: 3001
   - name: runtime
     container:
       image: registry.access.redhat.com/ubi8/nodejs-12:1-45
-      memoryLimit: 1024Mi
+      memoryLimit: 2048Mi
+      cpuLimit: 1000m
       mountSources: true
       sourceMapping: /project
       endpoints:
