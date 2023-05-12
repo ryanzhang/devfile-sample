@@ -60,7 +60,7 @@ commands:
       label: "Stop the web app"
       component: tools
       commandLine: >-
-          node_server_pids=$(pgrep -fx '.*npm (--inspect )?app.js' | tr "\\n" " ") &&
+          node_server_pids=$(pgrep  'npm' | tr "\\n" " ") &&
           echo "Stopping node server with PIDs: ${node_server_pids}" && 
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
