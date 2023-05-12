@@ -8,44 +8,60 @@ metadata:
 components:
   - name: runtime
     container:
-      image: registry.redhat.io/devspaces/udi-rhel8:latest
-      memoryLimit: 2048Mi
-      cpuLimit: 1000m
+      image: registry.redhat.io/devspaces/udi-rhel8:3.5
+#       memoryLimit: 2048Mi
+#       cpuLimit: 1000m
       mountSources: true
-      sourceMapping: /project
       endpoints:
         - name: http-3000
           targetPort: 3000
+      volumeMounts:
+        - name: npm
+          path: /home/user/.npm
+  - name: npm
+    volume:
+      size: 1G          
 commands:
-  - id: install
+  - id: 1-dependencies
     exec:
-      component: runtime
-      commandLine: npm install
-      workingDir: /project/devfile-sample/src
+      label: "Download dependencies"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/web-nodejs-sample/app
+      commandLine: "npm install"
       group:
         kind: build
-        isDefault: true
-  - id: run
+  - id: 2-run
     exec:
-      component: runtime
-      commandLine: npm start
-      workingDir: /project/devfile-sample/src
+      label: "Run the web app"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/web-nodejs-sample/app
+      commandLine: "nodemon app.js"
       group:
         kind: run
-        isDefault: true
-  - id: debug
+  - id: 3-install-and-run
     exec:
-      component: runtime
-      commandLine: npm run debug
-      workingDir: /project/devfile-sample/src
+      label: "Run the web app (and download dependencies)"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/web-nodejs-sample/app
+      commandLine: "npm install; nodemon app.js"
+      group:
+        kind: run
+  - id: 4-debug
+    exec:
+      label: "Run the web app (debugging enabled)"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/web-nodejs-sample/app
+      commandLine: "nodemon --inspect app.js"
       group:
         kind: debug
         isDefault: true
-  - id: test
+  - id: 5-stopapp
     exec:
-      component: runtime
-      commandLine: npm test
-      workingDir: /project/devfile-sample/src
+      label: "Stop the web app"
+      component: tools
+      commandLine: >-
+          node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+          echo "Stopping node server with PIDs: ${node_server_pids}" && 
+          kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
-        kind: test
-        isDefault: true
+        kind: run
