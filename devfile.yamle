@@ -38,7 +38,7 @@ commands:
       commandLine: "npm start"
       group:
         kind: run
-  - id: 3-hot-run(liveload)
+  - id: 3-hotload-run
     exec:
       label: "Run the web app (and download dependencies)"
       component: runtime
