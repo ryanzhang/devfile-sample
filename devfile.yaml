@@ -26,7 +26,7 @@ commands:
     exec:
       label: "Download dependencies"
       component: tools
-      workingDir: ${PROJECTS_ROOT}/dev-sample/app
+      workingDir: ${PROJECTS_ROOT}/dev-sample
       commandLine: "npm install"
       group:
         kind: build
@@ -34,24 +34,24 @@ commands:
     exec:
       label: "Run the web app"
       component: tools
-      workingDir: ${PROJECTS_ROOT}/dev-sample/app
-      commandLine: "nodemon app.js"
+      workingDir: ${PROJECTS_ROOT}/dev-sample
+      commandLine: "npm start"
       group:
         kind: run
   - id: 3-install-and-run
     exec:
       label: "Run the web app (and download dependencies)"
       component: tools
-      workingDir: ${PROJECTS_ROOT}/dev-sample/app
-      commandLine: "npm install; nodemon app.js"
+      workingDir: ${PROJECTS_ROOT}/dev-sample
+      commandLine: "npm install; npm start"
       group:
         kind: run
   - id: 4-debug
     exec:
       label: "Run the web app (debugging enabled)"
       component: tools
-      workingDir: ${PROJECTS_ROOT}/dev-sample/app
-      commandLine: "nodemon --inspect app.js"
+      workingDir: ${PROJECTS_ROOT}/dev-sample
+      commandLine: "npm run debug"
       group:
         kind: debug
         isDefault: true
@@ -60,7 +60,7 @@ commands:
       label: "Stop the web app"
       component: tools
       commandLine: >-
-          node_server_pids=$(pgrep -fx '.*nodemon (--inspect )?app.js' | tr "\\n" " ") &&
+          node_server_pids=$(pgrep -fx '.*npm (--inspect )?app.js' | tr "\\n" " ") &&
           echo "Stopping node server with PIDs: ${node_server_pids}" && 
           kill -15 ${node_server_pids} &>/dev/null && echo 'Done.'
       group:
