@@ -8,7 +8,7 @@ metadata:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi8/nodejs-12:1-45
+      image: registry.redhat.io/devspaces/udi-rhel8:latest
       memoryLimit: 2048Mi
       cpuLimit: 1000m
       mountSources: true
