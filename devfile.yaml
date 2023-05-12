@@ -40,7 +40,7 @@ commands:
         kind: run
   - id: 3-hotload-run
     exec:
-      label: "Run the web app (and download dependencies)"
+      label: "Run the web app (live reload)"
       component: runtime
       workingDir: /projects/devfile-sample/src
       commandLine: "nodemon server.js"
