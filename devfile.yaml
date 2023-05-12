@@ -25,7 +25,7 @@ commands:
   - id: 1-dependencies
     exec:
       label: "Download dependencies"
-      component: tools
+      component: runtime
       workingDir: /project/dev-sample/src
       commandLine: "npm install"
       group:
@@ -33,7 +33,7 @@ commands:
   - id: 2-run
     exec:
       label: "Run the web app"
-      component: tools
+      component: runtime
       workingDir: /project/dev-sample/src
       commandLine: "npm start"
       group:
@@ -41,7 +41,7 @@ commands:
   - id: 3-install-and-run
     exec:
       label: "Run the web app (and download dependencies)"
-      component: tools
+      component: runtime
       workingDir: /project/dev-sample/src
       commandLine: "npm install; npm start"
       group:
@@ -49,7 +49,7 @@ commands:
   - id: 4-debug
     exec:
       label: "Run the web app (debugging enabled)"
-      component: tools
+      component: runtime
       workingDir: /project/dev-sample/src
       commandLine: "npm run debug"
       group:
@@ -58,7 +58,7 @@ commands:
   - id: 5-stopapp
     exec:
       label: "Stop the web app"
-      component: tools
+      component: runtime
       commandLine: >-
           node_server_pids=$(pgrep  'npm' | tr "\\n" " ") &&
           echo "Stopping node server with PIDs: ${node_server_pids}" && 
