@@ -38,12 +38,12 @@ commands:
       commandLine: "npm start"
       group:
         kind: run
-  - id: 3-install-and-run
+  - id: 3-hot-run(liveload)
     exec:
       label: "Run the web app (and download dependencies)"
       component: runtime
       workingDir: /projects/devfile-sample/src
-      commandLine: "npm install; npm start"
+      commandLine: "nodemon server.js"
       group:
         kind: run
   - id: 4-debug
